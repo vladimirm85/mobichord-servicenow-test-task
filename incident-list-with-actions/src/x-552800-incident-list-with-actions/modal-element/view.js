@@ -1,5 +1,5 @@
-import '@servicenow/now-input'
-import '@servicenow/now-modal'
+import '@servicenow/now-input';
+import '@servicenow/now-modal';
 import { MODAL_BODY_ITEMS_DATA } from '../../assets/constants';
 
 export const view = (state) => {
@@ -12,17 +12,17 @@ export const view = (state) => {
         const value =
           (itemData.name === 'assignment_group' ||
             itemData.name === 'assigned_to' ||
-            itemData.name === 'caller_id') &&
+            itemData.name === 'caller_id' ||
+            itemData.name === 'opened_by') &&
           incident[itemData.name]
             ? incident[itemData.name].display_value
             : incident[itemData.name];
 
         return (
-          <now-input 
+          <now-input
             className={'modal__label'}
             label={itemData.label}
             type="text"
-            // readonly={true}
             value={value ? value : '-'}
           ></now-input>
         );

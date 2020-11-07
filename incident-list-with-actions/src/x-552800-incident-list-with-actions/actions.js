@@ -4,6 +4,8 @@ import {
   FETCH_INCIDENTS_PARAMS,
   FETCH_INCIDENTS_SUCCESS,
   IS_LOADING,
+  CLOSE_MODAL,
+  NOW_DROPDOWN_PANEL_ITEM_CLICKED,
 } from '../assets/constants';
 import { fetchIncidentsEffect } from './effects';
 
@@ -27,6 +29,22 @@ export default {
     [IS_LOADING]: ({ updateState }) => {
       updateState({
         isLoading: true,
+      });
+    },
+    [NOW_DROPDOWN_PANEL_ITEM_CLICKED]: ({ action, state, updateState }) => {
+      const { payload } = action;
+      const incident = state.incidents.find(
+        (incident) => incident.sys_id === payload.item.cardId
+      );
+      updateState({
+        isModalOpen: true,
+        selectedIncident: incident,
+      });
+    },
+    [CLOSE_MODAL]: ({ updateState }) => {
+      updateState({
+        isModalOpen: false,
+        selectedIncident: null,
       });
     },
   },
