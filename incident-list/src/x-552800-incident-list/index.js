@@ -1,19 +1,22 @@
 import { createCustomElement, actionTypes } from "@servicenow/ui-core";
 import snabbdom from "@servicenow/ui-renderer-snabbdom";
 import "@servicenow/now-template-card";
+import "@servicenow/now-loader";
 import styles from "./styles.scss";
 import { createHttpEffect } from "@servicenow/ui-effect-http";
 const { COMPONENT_BOOTSTRAPPED } = actionTypes;
 
+const IS_LOADING = "IS_LOADING";
+
 const INCIDENTS_FETCH_SUCCESS = "INCIDENTS_FETCH_SUCCESS";
 const fetchIncidentsEffect = createHttpEffect(
-  "api/now/table/incident?sysparm_display_value=true",
-  {
-    successActionType: INCIDENTS_FETCH_SUCCESS,
-  }
+	"api/now/table/incident?sysparm_display_value=true",
+	{
+		successActionType: INCIDENTS_FETCH_SUCCESS,
+	}
 );
 
-const view = ({ incidents }) => {
+const view = ({ incidents, isLoading }) => {
 	const cards = incidents.map((card) => (
 		<now-template-card-assist
 			className={"card"}
@@ -41,30 +44,43 @@ const view = ({ incidents }) => {
 		></now-template-card-assist>
 	));
 
-	return <div>{cards}</div>;
+	return (
+		<div>
+			{isLoading ? (
+				<now-loader label="Loading..." size="lg"></now-loader>
+			) : (
+				cards
+			)}
+		</div>
+	);
 };
 
-createCustomElement('x-552800-incident-list', {
-	renderer: {type: snabbdom},
+createCustomElement("x-552800-incident-list", {
+	renderer: { type: snabbdom },
 	view,
 	styles,
 	initialState: {
-	  incidents: [],
+		incidents: [],
+		isLoading: true,
 	},
 	actionHandlers: {
-	  [COMPONENT_BOOTSTRAPPED]: {
-		effect({ dispatch }) {
-		  dispatch("INCIDENTS_FETCHED");
+		[COMPONENT_BOOTSTRAPPED]: {
+			effect({ dispatch }) {
+				dispatch("INCIDENTS_FETCHED");
+				dispatch("IS_LOADING");
+			},
 		},
-	  },
-	  INCIDENTS_FETCHED: fetchIncidentsEffect,
-	  [INCIDENTS_FETCH_SUCCESS]: ({ action, updateState }) => {
-		updateState({
-		  path: "incidents",
-		  value: action.payload.result,
-		  operation: "concat",
-		});
-	  },
+		INCIDENTS_FETCHED: fetchIncidentsEffect,
+		[INCIDENTS_FETCH_SUCCESS]: ({ action, updateState }) => {
+			updateState({
+				incidents: action.payload.result,
+				isLoading: false,
+			});
+		},
+		[IS_LOADING]: ({ updateState }) => {
+			updateState({
+				isLoading: true,
+			});
+		},
 	},
-  });
-  
+});
