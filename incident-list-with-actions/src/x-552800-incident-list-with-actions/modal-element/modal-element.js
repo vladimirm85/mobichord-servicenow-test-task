@@ -4,15 +4,13 @@ import actions from './actions';
 import styles from './styles.scss';
 import { view } from './view';
 
-createCustomElement('x-552800-incident-list-with-actions', {
+createCustomElement('modal-element', {
   renderer: { type: snabbdom },
   view,
   styles,
-  initialState: {
-    incidents: [],
-    selectedIncident: {},
+  properties: {
+    incident: {},
     isModalOpen: false,
-    isLoading: true,
   },
   ...actions,
 });

@@ -1,5 +1,7 @@
 import '@servicenow/now-loader';
+import { Fragment } from '@servicenow/ui-renderer-snabbdom';
 import './incident-card';
+import './modal-element';
 
 export const view = ({ incidents, isLoading }) => {
   const cards = incidents.map((card) => (
@@ -15,7 +17,7 @@ export const view = ({ incidents, isLoading }) => {
   ));
 
   return (
-    <div className="wrapper">
+    <Fragment>
       {isLoading ? (
         <now-loader
           className={'loader'}
@@ -23,8 +25,11 @@ export const view = ({ incidents, isLoading }) => {
           size="lg"
         ></now-loader>
       ) : (
-        cards
+        <Fragment>
+          <modal-element isModalOpen={true} incident={incidents[0]} />
+          <div className="wrapper">{cards}</div>
+        </Fragment>
       )}
-    </div>
+    </Fragment>
   );
 };
