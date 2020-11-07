@@ -4,7 +4,7 @@ import styles from './styles.scss';
 
 const view = (state, {updateState}) => {
 	return (
-		<div></div>
+		<now-heading label="Hello world!" level="1" variant="header-primary"></now-heading>
 	);
 };
 
