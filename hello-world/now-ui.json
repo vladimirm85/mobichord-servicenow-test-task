@@ -4,9 +4,9 @@
 	        "innerComponents": [],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "My Component",
+				"label": "My Component Hello World",
 				"icon": "document-outline",
-				"description": "A description of my component",
+				"description": "My first ServiceNow Component Hello World",
 				"category": "primitives"
 			}
 	    }
