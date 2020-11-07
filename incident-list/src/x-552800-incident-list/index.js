@@ -45,9 +45,9 @@ const view = ({ incidents, isLoading }) => {
 	));
 
 	return (
-		<div>
+		<div className="wrapper">
 			{isLoading ? (
-				<now-loader label="Loading..." size="lg"></now-loader>
+				<now-loader className={"loader"} label="Loading..." size="lg"></now-loader>
 			) : (
 				cards
 			)}
