@@ -11,7 +11,8 @@ createCustomElement('modal-element', {
   properties: {
     incident: {},
     isModalOpen: false,
-    closeModal: ()=>{},
+    closeModal: () => {},
+    deleteIncident: () => {},
   },
   ...actions,
 });

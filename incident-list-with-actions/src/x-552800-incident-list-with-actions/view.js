@@ -2,7 +2,7 @@ import '@servicenow/now-loader';
 import { Fragment } from '@servicenow/ui-renderer-snabbdom';
 import './incident-card';
 import './modal-element';
-import { CLOSE_MODAL } from '../assets/constants';
+import { CLOSE_MODAL, DELETE_INCIDENT } from '../assets/constants';
 
 export const view = (
   { incidents, isLoading, isModalOpen, selectedIncident },
@@ -21,6 +21,11 @@ export const view = (
   ));
   const closeModal = () => dispatch(CLOSE_MODAL);
 
+  const deleteIncident = (incidentId) => {
+    dispatch(CLOSE_MODAL);
+    dispatch(DELETE_INCIDENT, { sys_id: incidentId });
+  };
+
   return (
     <Fragment>
       {isLoading ? (
@@ -35,6 +40,7 @@ export const view = (
             isModalOpen={isModalOpen}
             incident={selectedIncident}
             closeModal={closeModal}
+            deleteIncident={deleteIncident}
           />
           <div className="wrapper">{cards}</div>
         </Fragment>

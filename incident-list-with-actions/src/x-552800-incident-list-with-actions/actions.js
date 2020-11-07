@@ -6,8 +6,12 @@ import {
   IS_LOADING,
   CLOSE_MODAL,
   NOW_DROPDOWN_PANEL_ITEM_CLICKED,
+  DELETE_INCIDENT,
+  DELETE_INCIDENT_EFFECT,
+  DELETE_INCIDENT_SUCCESS,
+  DELETE_INCIDENT_FAILED,
 } from '../assets/constants';
-import { fetchIncidentsEffect } from './effects';
+import { fetchIncidentsEffect, deleteIncidentEffect } from './effects';
 
 const { COMPONENT_BOOTSTRAPPED } = actionTypes;
 
@@ -46,6 +50,21 @@ export default {
         isModalOpen: false,
         selectedIncident: null,
       });
+    },
+    [DELETE_INCIDENT_EFFECT]: deleteIncidentEffect,
+    [DELETE_INCIDENT_SUCCESS]: ({ dispatch }) => {
+      dispatch(FETCH_INCIDENTS, FETCH_INCIDENTS_PARAMS);
+    },
+    [DELETE_INCIDENT_FAILED]: ({ updateState }) => {
+      updateState({
+        isLoading: false,
+      });
+    },
+    [DELETE_INCIDENT]: ({ action, dispatch, updateState }) => {
+      updateState({
+        isLoading: true,
+      });
+      dispatch(DELETE_INCIDENT_EFFECT, { sys_id: action.payload.sys_id });
     },
   },
 };
