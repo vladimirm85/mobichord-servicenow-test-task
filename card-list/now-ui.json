@@ -4,9 +4,9 @@
 	        "innerComponents": [],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "My Component",
+				"label": "My Component Card List",
 				"icon": "document-outline",
-				"description": "A description of my component",
+				"description": "A  Card List Component",
 				"category": "primitives"
 			}
 	    }
