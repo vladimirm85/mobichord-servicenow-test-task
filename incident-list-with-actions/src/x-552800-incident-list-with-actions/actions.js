@@ -35,15 +35,24 @@ export default {
         isLoading: true,
       });
     },
-    [NOW_DROPDOWN_PANEL_ITEM_CLICKED]: ({ action, state, updateState }) => {
+    [NOW_DROPDOWN_PANEL_ITEM_CLICKED]: ({
+      action,
+      state,
+      updateState,
+      dispatch,
+    }) => {
       const { payload } = action;
-      const incident = state.incidents.find(
-        (incident) => incident.sys_id === payload.item.cardId
-      );
-      updateState({
-        isModalOpen: true,
-        selectedIncident: incident,
-      });
+      if (payload.item.id === 'delete') {
+        dispatch(DELETE_INCIDENT, { sys_id: payload.item.cardId });
+      } else {
+        const incident = state.incidents.find(
+          (incident) => incident.sys_id === payload.item.cardId
+        );
+        updateState({
+          isModalOpen: true,
+          selectedIncident: incident,
+        });
+      }
     },
     [CLOSE_MODAL]: ({ updateState }) => {
       updateState({
