@@ -14,10 +14,34 @@ const fetchIncidentsEffect = createHttpEffect(
 );
 
 const view = ({ incidents }) => {
-	console.log(incidents);
-	return (
-		<div></div>
-	);
+	const cards = incidents.map((card) => (
+		<now-template-card-assist
+			className={"card"}
+			tagline={{ icon: "tree-view-long-outline", label: "Incident" }}
+			actions={[
+				{ id: "share", label: "Copy URL" },
+				{ id: "close", label: "Mark Complete" },
+			]}
+			heading={{
+				label: card.short_description,
+			}}
+			content={[
+				{ label: "Number", value: { type: "string", value: card.number } },
+				{ label: "State", value: { type: "string", value: card.state } },
+				{
+					label: "Assignment Group",
+					value: { type: "string", value: card.assignment_group.display_value },
+				},
+				{
+					label: "Assigned To",
+					value: { type: "string", value: card.assigned_to.display_value },
+				},
+			]}
+			footerContent={{ label: "Updated", value: card.sys_updated_on }}
+		></now-template-card-assist>
+	));
+
+	return <div>{cards}</div>;
 };
 
 createCustomElement('x-552800-incident-list', {
