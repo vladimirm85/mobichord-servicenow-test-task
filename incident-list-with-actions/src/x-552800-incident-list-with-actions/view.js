@@ -2,7 +2,12 @@ import '@servicenow/now-loader';
 import { Fragment } from '@servicenow/ui-renderer-snabbdom';
 import './incident-card';
 import './modal-element';
-import { CLOSE_MODAL, DELETE_INCIDENT } from '../assets/constants';
+import './search-section';
+import {
+  CLOSE_MODAL,
+  DELETE_INCIDENT,
+  SET_SEARCH_PARAMS,
+} from '../assets/constants';
 
 export const view = (
   { incidents, isLoading, isModalOpen, selectedIncident },
@@ -26,8 +31,12 @@ export const view = (
     dispatch(DELETE_INCIDENT, { sys_id: incidentId });
   };
 
+  const search = (searchParams) =>
+    dispatch(SET_SEARCH_PARAMS, { searchParams });
+
   return (
     <Fragment>
+      <search-section search={search} />
       {isLoading ? (
         <now-loader
           className={'loader'}
@@ -42,7 +51,7 @@ export const view = (
             closeModal={closeModal}
             deleteIncident={deleteIncident}
           />
-          <div className="wrapper">{cards}</div>
+          <div className="cards-wrapper">{cards}</div>
         </Fragment>
       )}
     </Fragment>

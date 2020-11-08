@@ -1,7 +1,6 @@
 import { actionTypes } from '@servicenow/ui-core';
 import {
   FETCH_INCIDENTS,
-  FETCH_INCIDENTS_PARAMS,
   FETCH_INCIDENTS_SUCCESS,
   IS_LOADING,
   CLOSE_MODAL,
@@ -10,16 +9,28 @@ import {
   DELETE_INCIDENT_EFFECT,
   DELETE_INCIDENT_SUCCESS,
   DELETE_INCIDENT_FAILED,
+  SET_SEARCH_PARAMS,
+  INITIAL_SEARCH_PARAMS,
 } from '../assets/constants';
+import { getFetchIncidentsParams } from '../assets/helpers';
 import { fetchIncidentsEffect, deleteIncidentEffect } from './effects';
 
 const { COMPONENT_BOOTSTRAPPED } = actionTypes;
+
+export const FETCH_INCIDENTS_PARAMS = {
+  sysparm_limit: '100',
+  sysparm_display_value: 'true',
+  sysparm_query: 'ORDERBYDESCsys_updated_on^active=true',
+};
 
 export default {
   actionHandlers: {
     [COMPONENT_BOOTSTRAPPED]: {
       effect({ dispatch }) {
-        dispatch(FETCH_INCIDENTS, FETCH_INCIDENTS_PARAMS);
+        dispatch(
+          FETCH_INCIDENTS,
+          getFetchIncidentsParams(INITIAL_SEARCH_PARAMS)
+        );
         dispatch(IS_LOADING);
       },
     },
@@ -61,8 +72,8 @@ export default {
       });
     },
     [DELETE_INCIDENT_EFFECT]: deleteIncidentEffect,
-    [DELETE_INCIDENT_SUCCESS]: ({ dispatch }) => {
-      dispatch(FETCH_INCIDENTS, FETCH_INCIDENTS_PARAMS);
+    [DELETE_INCIDENT_SUCCESS]: ({ state, dispatch }) => {
+      dispatch(FETCH_INCIDENTS, getFetchIncidentsParams(state.searchParams));
     },
     [DELETE_INCIDENT_FAILED]: ({ updateState }) => {
       updateState({
@@ -74,6 +85,16 @@ export default {
         isLoading: true,
       });
       dispatch(DELETE_INCIDENT_EFFECT, { sys_id: action.payload.sys_id });
+    },
+    [SET_SEARCH_PARAMS]: ({ action, dispatch, updateState }) => {
+      updateState({
+        searchParams: action.payload.searchParams,
+        isLoading: true,
+      });
+      dispatch(
+        FETCH_INCIDENTS,
+        getFetchIncidentsParams(action.payload.searchParams)
+      );
     },
   },
 };

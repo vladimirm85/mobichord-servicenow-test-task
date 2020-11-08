@@ -1,0 +1,30 @@
+.search-form{
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  align-items: flex-start;
+  padding-bottom: 10px;
+  border-bottom: 1px solid grey;
+
+  &_rg40 {
+    display: flex;
+    align-items: center;
+    column-gap: 40px;
+  }
+
+  &_rg10 {
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+  }
+
+  &__section {
+    display: flex;
+    align-items: center;
+  }
+
+  &__buttons-section {
+    column-gap: 5px;
+  }
+
+}

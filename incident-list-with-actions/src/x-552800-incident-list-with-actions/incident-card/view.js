@@ -17,7 +17,7 @@ export const view = (state) => {
       className={'card'}
       tagline={{ icon: 'tree-view-long-outline', label: 'Incident' }}
       actions={[
-        { id: 'open', label: 'Open Recoed', cardId: sysId },
+        { id: 'open', label: 'Open Record', cardId: sysId },
         { id: 'delete', label: 'Delete', cardId: sysId },
       ]}
       heading={{

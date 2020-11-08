@@ -1,5 +1,9 @@
 import { createHttpEffect } from '@servicenow/ui-effect-http';
-import { FETCH_INCIDENTS_SUCCESS, DELETE_INCIDENT_SUCCESS, DELETE_INCIDENT_FAILED } from '../assets/constants';
+import {
+  FETCH_INCIDENTS_SUCCESS,
+  DELETE_INCIDENT_SUCCESS,
+  DELETE_INCIDENT_FAILED,
+} from '../assets/constants';
 
 export const fetchIncidentsEffect = createHttpEffect('api/now/table/incident', {
   queryParams: ['sysparm_limit', 'sysparm_display_value', 'sysparm_query'],

@@ -1,18 +1,15 @@
 @import '@servicenow/sass-kit/host';
 
-.wrapper {
+.cards-wrapper {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   row-gap: 5px;
   column-gap: 5px;
-  max-width: 1000px;
+  max-width: 980px;
+  padding-top: 5px;
   margin: 0 auto;
-}
-
-.card {
-  width: 485px;
 }
 
 .loader {
