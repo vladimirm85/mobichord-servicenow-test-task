@@ -4,9 +4,9 @@
 	        "innerComponents": [],
 			"uiBuilder": {
 				"associatedTypes": ["global.core", "global.landing-page"],
-				"label": "My Component",
+				"label": "My Incident list with actions Component",
 				"icon": "document-outline",
-				"description": "A description of my component",
+				"description": "List of incidents with delete and filter actions",
 				"category": "primitives"
 			}
 	    }
